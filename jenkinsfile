@@ -3,7 +3,7 @@ pipeline
     agent any
     stages {
 
-        stage("BUILD")
+        stage("BUILD FILE")
         {
             steps
             {
