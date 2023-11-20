@@ -1,0 +1,32 @@
+pipeline 
+{
+    agent any
+    stages {
+
+        stage("BUILD")
+        {
+            steps
+            {
+               script
+               {
+                 def customImage = docker.build("my-mysql-image:${BUILD_NUMBER}", "-f Dockerfile.mysql .")
+               }
+            }
+        }
+
+        stage("PUSH TO DOCKERHUB")
+        {
+            steps 
+            {
+                script 
+                {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials')
+                    {
+                        customImage.push()
+                    }
+                }
+            }
+        }
+
+    }
+}
